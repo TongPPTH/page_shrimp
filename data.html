@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="../static/scripts.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>Shrimp counting system</h1>
+        </nav>
+    </header>
+
+    <a href="my_farm.html" id="button" class="notification"><img src="tap.png" width="35" height="35" class="tap"><span
+            class="badge"></span></a>
+
+    <div class="content">
+        <img src="shrimp.png" width="150" height="150" class="logo">
+        <div class="status">
+            <h2>History</h2>
+        </div>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>TIME STAMP</th>
+                    <th>COUNTED</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Rows will be added here dynamically -->
+            </tbody>
+        </table>
+        <div class="pagination" id="pagination-controls">
+            <!-- Pagination buttons will be added here dynamically -->
+        </div>
+
+    </div>
+    <!-- </div>
+        <h1>System Control</h1>
+        <p>Water Pump</p>
+        <button onclick="system('ON')" class="button_start">Start Pump</button>
+        <button onclick="system('OFF')" class="button_stop">Stop Pump</button>
+        <p>Light</p>
+        <button onclick="light('ON')" class="button_start">Open Light</button>
+        <button onclick="light('OFF')" class="button_stop">Close Light</button>
+    </div> -->
+
+    <div class="footer">
+        <ul>
+            <a href="index.html">System</a>
+
+            <span> | </span>
+            <a href="counting.html">Counting</a>
+
+            <span> | </span>
+            <a href="data.html">History</a>
+        </ul>
+    </div>
+</body>
+<script>
+    const data = [
+        { column1: '18-06-2024 17:20:18', column2: '26' },
+        { column1: '18-06-2024 17:14:57', column2: '134' },
+        { column1: '18-06-2024 17:10:43', column2: '141' },
+        { column1: '18-06-2024 17:08:30', column2: '99' }
+    ];
+
+    const rowsPerPage = 3;
+    let currentPage = 1;
+
+    function displayTable(page) {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedData = data.slice(start, end);
+
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = '';
+
+        paginatedData.forEach(row => {
+            const rowElement = document.createElement('tr');
+            rowElement.innerHTML = `
+                        <td>${row.column1}</td>
+                        <td>${row.column2}</td>
+                    `;
+            tableBody.appendChild(rowElement);
+        });
+
+        displayPaginationControls();
+    }
+
+    function displayPaginationControls() {
+        const paginationControls = document.getElementById('pagination-controls');
+        paginationControls.innerHTML = '';
+
+        const totalPages = Math.ceil(data.length / rowsPerPage);
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.className = i === currentPage ? 'active' : '';
+            button.addEventListener('click', () => {
+                currentPage = i;
+                displayTable(currentPage);
+            });
+            paginationControls.appendChild(button);
+        }
+    }
+
+    displayTable(currentPage);
+</script>
+<script src="scripts.js"></script>
+
+</html>
